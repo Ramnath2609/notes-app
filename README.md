@@ -4,6 +4,7 @@ Notes app is an application that allows users to make a list of notes. Further, 
 # Installation
 ``` bash
 create-react-app notes-app
+npm install express
 ```
 
 # Dependencies
