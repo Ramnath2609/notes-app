@@ -22,4 +22,4 @@ Create a note by filling the input forms and then select the category within whi
 Once you are done with the forms click on submit and a note will be created. If you need to delete or edit a particular note you can click on show note and modify or delete it.
 
 # License
-Copyright(c) 2020 [DCT academy] (https://dctacademy.com/)
+Copyright(c) 2020 [DCT academy](https://dctacademy.com/)
