@@ -30,16 +30,16 @@ class NotesList extends React.Component {
 
     render () {
         return (
-            <div>
+            <div className = "container" style = {{width : '750px'}}>
                 <h2>Listing notes - { this.state.notes.length }</h2>
-                <ul>
+                <ul className = "list-group">
                     {
                         this.state.notes.map(note => {
-                            return <li key = {note._id}>{ note.title }<Link to = {`/notes/${note._id}`}>Show  |</Link></li>
+                            return <li className = "list-group-item" key = {note._id}>{ note.title }<Link to = {`/notes/${note._id}`}>  Show  |</Link></li>
                         })
                     }
-                </ul>
-                <button onClick = { this.handleClick }>Create a new note</button>
+                </ul><br/>
+                <button onClick = { this.handleClick } className = "btn btn-primary">Create a new note</button>
             </div>
         )
     }

@@ -57,26 +57,27 @@ class NoteForm extends React.Component {
 
     render () {
         return (
-            <div>
+            <div className = "container">
                   <form onSubmit = { this.handleSubmit }>
-                    <label htmlFor="title">Title
-                    <input type="text" id = "title" name = "title" value= { this.state.title } onChange = { this.handleChange } /><br/>
-                    </label>
-                    <label htmlFor="description">description
-                    <input type="text" name="description" id ="description" value={ this.state.description } onChange = { this.handleChange }/><br/>
-                    </label>
-                    <select onChange = { this.handleSelect }>
-                        <option value="select" >Select</option>
-                        {
-                            this.state.categories.map(category => {
-                                return <option name ="category" value= { category._id } key = { category._id } >{ category.name }</option>
-                            })
-                        }
-                    </select><br/>
-                    <label>Photo
-                        <input type="file" name="photo" value='' onChange = { this.handleChange }/>
-                    </label>
-                    <input type="submit" name="" value="Create" />
+                    <div className = "form-group">
+                        <label htmlFor="title">Title</label>
+                        <input type="text" className = "form-control" id = "title" name = "title" value= { this.state.title } onChange = { this.handleChange } />
+                    </div>
+                    <div className = "form-group">
+                        <label htmlFor="description">description</label>
+                        <input type="text" className = "form-control" name="description" id ="description" value={ this.state.description } onChange = { this.handleChange }/>
+                    </div>
+                    <div className = "form-group">
+                        <select className = "form-control" onChange = { this.handleSelect }>
+                            <option value="select" >Select</option>
+                            {
+                                this.state.categories.map(category => {
+                                    return <option name ="category" value= { category._id } key = { category._id } >{ category.name }</option>
+                                })
+                            }
+                        </select>
+                    </div>
+                    <button type = "submit" className = "btn btn-primary">Create</button>
                 </form>
             </div>
         )

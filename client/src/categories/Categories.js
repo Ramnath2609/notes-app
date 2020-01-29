@@ -37,16 +37,16 @@ class CategoryList extends React.Component {
 
     render () {
         return (
-            <div>
+            <div className = "container" style = {{width : '750px'}}>
                 <h2>List of categories - {this.state.categories.length } </h2>
-                <ul>
+                <ul className = "list-group">
                     {
                         this.state.categories.map(category => {
-                            return <li key = {category._id}>{ category.name }<Link to ={`/categories/edit/${category._id}`}>Edit  |</Link><Link to = '/categories'onClick={() => {this.handleDelete(category._id)}}>Delete</Link></li>
+                            return <li className = "list-group-item" key = {category._id}>{ category.name }<Link to ={`/categories/edit/${category._id}`}>  Edit  |</Link><Link to = '/categories'onClick={() => {this.handleDelete(category._id)}}>  Delete</Link></li>
                         })
                     }
-                </ul>
-                <button onClick ={ this.handleClick }>Add</button>
+                </ul><br/>
+                <button className = "btn btn-primary" onClick ={ this.handleClick }>Add</button>
             </div>
         )
     }

@@ -41,13 +41,13 @@ class NoteShow extends React.Component {
 
     render () {
         return (
-            <div>
+            <div className = "container jumbotron">
                 <h2>Showing post</h2>
                 <h3>{ this.state.note.title }</h3>
                 <p><em>Description :</em>{ this.state.note.description }</p>
                 {/*<p><em>Category :</em>{Object.keys(this.state.note).length === 0 ? '' : this.state.note.category.name } </p>*/}
-                <button onClick ={ this.handleClick }>Delete</button>
-                <button onClick = { this.handleEdit }>Edit</button>
+                <button className = "btn btn-danger" onClick ={ this.handleClick }>Delete</button>
+                <button className = "btn btn-primary" onClick = { this.handleEdit }>Edit</button>
             </div>
         )
     }

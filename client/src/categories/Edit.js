@@ -50,13 +50,14 @@ class CategoryEdit extends React.Component {
             )
         } else {
             return (
-                <div>
+                <div className = "container">
                     <h2>Edit category</h2>
                     <form onSubmit = { this.handleSubmit }>
-                        <label>Name 
-                            <input type="text" name="category" value={ this.state.category.name } onChange = { this.handleChange }/>
-                        </label>
-                        <input type="submit" name="" value="Submit"/>
+                        <div className = "form-group">
+                        <label htmlFor = "category">Name </label>
+                            <input type="text" id="category" className = "form-control" name="category" value={ this.state.category.name } onChange = { this.handleChange }/>
+                        </div>
+                        <button type = "submit" className = "btn btn-primary">Add</button>
                     </form>
                 </div>
             )
