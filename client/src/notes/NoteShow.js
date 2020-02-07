@@ -12,7 +12,11 @@ class NoteShow extends React.Component {
 
     componentDidMount () {
         const id = this.props.match.params.id
-        axios.get(`http://localhost:3015/notes/${id}`)
+        axios.get(`http://localhost:3015/notes/${id}`, {
+            headers : {
+                'x-auth' : localStorage.getItem('authToken')
+            }
+        })
             .then(response => {
                 const note = response.data
                 console.log(note)
@@ -22,7 +26,11 @@ class NoteShow extends React.Component {
 
     handleClick = () => {
         const id = this.props.match.params.id
-        axios.delete(`http://localhost:3015/notes/${id}`)
+        axios.delete(`http://localhost:3015/notes/${id}`, {
+            headers : {
+                'x-auth' : localStorage.getItem('authToken')
+            }
+        })
             .then(response => {
                 if (response.data._id) {
                     this.props.history.push('/notes')

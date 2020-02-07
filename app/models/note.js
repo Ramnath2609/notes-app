@@ -20,8 +20,8 @@ const noteSchema = new Schema({
         required : true,
         ref:'Category'
     },
-    photo : {
-        type :String
+    user : {
+        type : Schema.Types.ObjectId
     }
 })
 

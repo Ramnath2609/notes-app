@@ -2,31 +2,36 @@ const express = require('express')
 const router = express.Router()
 const notesController = require('../app/controllers/notesController')
 const categoriesController = require('../app/controllers/categoriesController')
-const multer = require('multer')
+const usersController = require('../app/controllers/usersController')
+const authenticateUser = require('../app/middlewares/authentication')
+// const multer = require('multer')
 
 
-const storage = multer.diskStorage({
-    destination : (req, file, cb) => {
-        cb(null, 'uploads')
-    },
-    filename : (req, file, cb) => {
-        cb(null, new Date () + file.originalname)
-    }
-})
+// const storage = multer.diskStorage({
+//     destination : (req, file, cb) => {
+//         cb(null, 'uploads')
+//     },
+//     filename : (req, file, cb) => {
+//         cb(null, new Date () + file.originalname)
+//     }
+// })
 
-const upload = multer({ storage })
+// const upload = multer({ storage })
 
-router.get('/notes', notesController.list)
-router.get('/notes/:id', notesController.show)
-router.post('/notes', upload.single('photo'), notesController.create)
-router.put('/notes/:id', notesController.update)
-router.delete('/notes/:id', notesController.destroy)
+router.get('/notes',authenticateUser, notesController.list)
+router.get('/notes/:id',authenticateUser, notesController.show)
+router.post('/notes', authenticateUser,  notesController.create)
+router.put('/notes/:id', authenticateUser, notesController.update)
+router.delete('/notes/:id', authenticateUser, notesController.destroy)
 
-router.get('/categories', categoriesController.list)
-router.post('/categories', categoriesController.create)
-router.get('/categories/:id', categoriesController.show)
-router.put('/categories/:id', categoriesController.update)
-router.delete('/categories/:id', categoriesController.destroy)
+router.get('/categories', authenticateUser, categoriesController.list)
+router.post('/categories',authenticateUser, categoriesController.create)
+router.get('/categories/:id',authenticateUser, categoriesController.show)
+router.put('/categories/:id',authenticateUser, categoriesController.update)
+router.delete('/categories/:id',authenticateUser, categoriesController.destroy)
+
+router.post('/users/register', usersController.register)
+router.post('/users/login', usersController.login)
 
 
 module.exports = router

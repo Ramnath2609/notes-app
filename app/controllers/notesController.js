@@ -1,20 +1,15 @@
 const Note = require('../models/note')
 
 module.exports.create = (req,  res) => {
-    console.log(req.file)
     const body = req.body
-    if (req.file) {
-        const file = req.file
-        body.photo = file.path
-    }
-    
     const note = new Note (body)
+    note.user = req.user._id
     note.save()
         .then(note => {
             if (note) {
-                res.json(note)
+                res.send(note)
             } else {
-                res.json({})
+                res.send({})
             }
         })
         .catch(err => {
@@ -39,7 +34,7 @@ module.exports.destroy = (req, res) => {
 
 module.exports.show = (req, res) => {
     const id = req.params.id
-    Note.findById(id).populate('category', ['_id', 'name'])
+    Note.findOne({ _id : id, user : req.user._id }).populate('category', ['_id', 'name'])
       .then(note => {
           res.json(note)
       })
@@ -63,7 +58,7 @@ module.exports.update = (req, res) => {
 
 
 module.exports.list = (req, res) => {
-    Note.find().populate('category', ['_id', 'name'])  // static method, since it is called on the model
+    Note.find({ user : req.user._id }).populate('category', ['_id', 'name'])  // static method, since it is called on the model
         .then(notes => {
             res.json(notes)
         }) 

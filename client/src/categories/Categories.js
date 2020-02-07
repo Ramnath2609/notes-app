@@ -11,8 +11,13 @@ class CategoryList extends React.Component {
     }
 
     componentDidMount () {
-        axios.get('http://localhost:3015/categories')
+        axios.get('http://localhost:3015/categories',{
+            headers : {
+                'x-auth' : localStorage.getItem('authToken')
+            }
+        })
             .then(response => {
+                console.log(response)
                 const categories = response.data
                 this.setState({ categories })
             })
@@ -40,7 +45,7 @@ class CategoryList extends React.Component {
             <div className = "container" style = {{width : '750px'}}>
                 <h2>List of categories - {this.state.categories.length } </h2>
                 <ul className = "list-group">
-                    {
+                    { this.state.categories.length !== 0 &&
                         this.state.categories.map(category => {
                             return <li className = "list-group-item" key = {category._id}>{ category.name }<Link to ={`/categories/edit/${category._id}`}>  Edit  |</Link><Link to = '/categories'onClick={() => {this.handleDelete(category._id)}}>  Delete</Link></li>
                         })

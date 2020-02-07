@@ -8,7 +8,6 @@ class NoteForm extends React.Component {
             title : props.title ? props.title : '',
             description : props.description ? props.description : '',
             category : props.category ? props.category : '',
-            photo :  null,
             categories : props.categories 
         }
     }
@@ -70,7 +69,7 @@ class NoteForm extends React.Component {
                     <div className = "form-group">
                         <select className = "form-control" onChange = { this.handleSelect }>
                             <option value="select" >Select</option>
-                            {
+                            {this.state.categories.length !== 0 &&
                                 this.state.categories.map(category => {
                                     return <option name ="category" value= { category._id } key = { category._id } >{ category.name }</option>
                                 })

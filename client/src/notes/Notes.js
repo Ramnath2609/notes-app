@@ -13,7 +13,11 @@ class NotesList extends React.Component {
     }
 
     componentDidMount () {
-        axios.get('http://localhost:3015/notes')
+        axios.get('http://localhost:3015/notes',{
+            headers : {
+                'x-auth' : localStorage.getItem('authToken')
+            }
+        })
             .then(response => {
                 const notes = response.data
                 this.setState({

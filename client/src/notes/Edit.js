@@ -15,8 +15,8 @@ class NoteEdit extends React.Component {
         console.log('component did mount')
         const id = this.props.match.params.id
         console.log(id)
-        const req1 = axios.get('http://localhost:3015/categories')
-        const req2 = axios.get(`http://localhost:3015/notes/${id}`)
+        const req1 = axios.get('http://localhost:3015/categories',{ headers : { 'x-auth' : localStorage.getItem('authToken')}})
+        const req2 = axios.get(`http://localhost:3015/notes/${id}`, { headers : { 'x-auth' : localStorage.getItem('authToken')}} )
         Promise.all([req1, req2])
             .then(responses => {
                 
@@ -35,7 +35,11 @@ class NoteEdit extends React.Component {
         //e.preventDefault()
         //console.log(formData)
         const id = this.props.match.params.id
-        axios.put(`http://localhost:3015/notes/${id}`, formData)
+        axios.put(`http://localhost:3015/notes/${id}`, formData, {
+            headers : {
+                'x-auth' : localStorage.getItem('authToken')
+            }
+        })
             .then(response => {
                 console.log(response)
                 if (response.data._id) {

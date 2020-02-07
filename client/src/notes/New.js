@@ -16,7 +16,11 @@ class NewNote extends React.Component {
 
     
     componentDidMount () {
-        axios.get('http://localhost:3015/categories')
+        axios.get('http://localhost:3015/categories', {
+            headers : {
+                'x-auth' : localStorage.getItem('authToken')
+            }
+        })
             .then(response => {
                 const categories = response.data
                 this.setState({ categories })
@@ -27,7 +31,9 @@ class NewNote extends React.Component {
         //e.preventDefault()
         //console.log(formData)
         axios.post('http://localhost:3015/notes', formData, {
-            'content-type': 'multipart/form-data'
+            headers : {
+                'x-auth' : localStorage.getItem('authToken')
+            }
         })
             .then(response => {
                 console.log(response)

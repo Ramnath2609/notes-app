@@ -1,7 +1,8 @@
 const Category = require('../models/category')
 
 module.exports.list = (req, res) => {
-    Category.find()
+    console.log(req.user)
+    Category.find({ user : req.user._id})
     .then(category => {
         res.json(category)
     })
@@ -13,6 +14,7 @@ module.exports.list = (req, res) => {
 module.exports.create = (req,res) => {
     const body = req.body
     const category = new Category(body)
+    category.user = req.user._id
     category.save()
         .then(category => {
             res.json(category)
@@ -24,7 +26,7 @@ module.exports.create = (req,res) => {
 
 module.exports.show = (req, res) => {
     const id = req.params.id
-    Category.findById(id)
+    Category.findOne({ _id : id, user : req.user._id})
         .then(category => {
             if (category) {
                 res.json(category)

@@ -19,7 +19,11 @@ class CategoryNew extends React.Component {
         const formData = {
             name : category
         }
-        axios.post('http://localhost:3015/categories', formData)
+        axios.post('http://localhost:3015/categories', formData, {
+            headers : {
+                'x-auth' : localStorage.getItem('authToken')
+            }
+        })
             .then(response => {
                 console.log(response.data)
                 if (response.data._id) {
@@ -33,13 +37,14 @@ class CategoryNew extends React.Component {
 
     render () {
         return (
-            <div>
+            <div className = "container" >
                 <h2>Add a new category</h2>
                 <form onSubmit = { this.handleSubmit }>
-                    <label>Name
-                        <input type="text" name="category" value= { this.state.category } onChange = { this.handleChange }/>
-                    </label>
-                    <input type="submit" name="" value="Add" />
+                    <div className = "form-group">
+                        <input type="text" placeholder = "category name" className = "form-control" name="category" value= { this.state.category } onChange = { this.handleChange }/>
+                    </div>
+                    
+                    <button type="submit" className = "btn btn-primary">Add</button>
                 </form>
             </div>
         )
