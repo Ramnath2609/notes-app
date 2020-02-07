@@ -9,8 +9,7 @@ class NewNote extends React.Component {
             title : '',
             description : '',
             categories : [], 
-            category : '',
-            photo : ''
+            category : ''
         }
     }
 
@@ -28,8 +27,6 @@ class NewNote extends React.Component {
     }
 
     handleSubmit = (formData) => {
-        //e.preventDefault()
-        //console.log(formData)
         axios.post('http://localhost:3015/notes', formData, {
             headers : {
                 'x-auth' : localStorage.getItem('authToken')
@@ -57,7 +54,7 @@ class NewNote extends React.Component {
             )
         }else {
             return (
-                <div>
+                <div className = "container">
                   <h2>Add a new note</h2>
                   <NoteForm handleSubmit = { this.handleSubmit } { ...this.state }/>
                 </div>

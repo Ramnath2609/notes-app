@@ -7,7 +7,8 @@ class Login extends React.Component {
         super ()
         this.state = {
             email : '',
-            password : ''
+            password : '',
+            error : ''
         }
     }
 
@@ -31,7 +32,8 @@ class Login extends React.Component {
                     window.location.reload()          
 
                 } else {
-                    alert(response.data.err)
+                    console.log(response.data)
+                    this.setState({ error : response.data.err })
                 }
                 
             })
@@ -46,13 +48,19 @@ class Login extends React.Component {
                 <h1>Login</h1>
                 <form onSubmit = { this.handleSubmit }>
                     <div className = "form-group">
-                        <input type = "text" placeholder = "email" name = "email" className = "form-control" value = { this.state.email } onChange = { this.handleChange } />
+                        <input type = "text" placeholder = "email or username" name = "email" className = "form-control" value = { this.state.email } onChange = { this.handleChange } />
                     </div>
                     <div className = "form-group">
                         <input type = "password" placeholder = "password" name = "password" className = "form-control" value = { this.state.password } onChange = { this.handleChange } />
                     </div>
+                    { this.state.error.length !== 0 && 
+                    <div className = "alert alert-danger" role = "alert">
+                        { this.state.error }
+                    </div>
+                    }
                     <button type = "submit" className = "btn btn-primary" >Submit</button>
                 </form>
+               
             </div>
         )
     }
