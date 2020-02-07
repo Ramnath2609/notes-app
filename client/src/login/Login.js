@@ -1,27 +1,38 @@
 import React from 'react'
 import axios from 'axios'
-
+import validator from 'validator'
 
 class Login extends React.Component {
     constructor() {
         super ()
         this.state = {
-            email : '',
+            input : '',
             password : '',
             error : ''
         }
     }
 
     handleChange = (e) => {
+
         this.setState( { [e.target.name] : e.target.value })
     }
 
     handleSubmit = (e) => {
         e.preventDefault()
-        const formData = { 
-            email : this.state.email,
-            password : this.state.password
+        let formData
+        if(validator.isEmail(this.state.input)) {
+            formData = { 
+                email : this.state.input,
+                password : this.state.password
+            }
+        } else {
+            formData = { 
+                username : this.state.input,
+                password : this.state.password
+            }
         }
+        
+        console.log(formData)
         axios.post('http://localhost:3015/users/login', formData)
             .then(response => {
                 console.log(response)
@@ -48,7 +59,7 @@ class Login extends React.Component {
                 <h1>Login</h1>
                 <form onSubmit = { this.handleSubmit }>
                     <div className = "form-group">
-                        <input type = "text" placeholder = "email or username" name = "email" className = "form-control" value = { this.state.email } onChange = { this.handleChange } />
+                        <input type = "text" placeholder = "email or username" name = "input" className = "form-control" value = { this.state.input } onChange = { this.handleChange } />
                     </div>
                     <div className = "form-group">
                         <input type = "password" placeholder = "password" name = "password" className = "form-control" value = { this.state.password } onChange = { this.handleChange } />

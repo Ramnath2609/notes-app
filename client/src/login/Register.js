@@ -32,8 +32,6 @@ class Register extends React.Component {
                     this.props.history.push('/users/login')
                 } else {
                     const errors = response.data.errors
-                    console.log({ [Object.keys(errors)[0]] : errors[Object.keys(errors)[0]].message })
-                    console.log(Object.keys(errors)[0])
                     this.setState({ error : { [Object.keys(errors)[0]] : errors[Object.keys(errors)[0]].message } })
                 }
             })
