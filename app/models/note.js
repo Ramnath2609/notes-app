@@ -22,6 +22,25 @@ const noteSchema = new Schema({
     },
     user : {
         type : Schema.Types.ObjectId
+    },
+    pinned : {
+        type : Boolean,
+        default : false
+    },
+    photo : {
+        type : String
+    },
+    color : {
+        type: String
+    },
+    reminder : {
+        type : String
+    },
+    archived : {
+        type : Boolean
+    },
+    deleted : {
+        type : Boolean
     }
 })
 

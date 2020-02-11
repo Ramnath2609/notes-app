@@ -9,8 +9,7 @@ const categorySchema = new Schema ({
     user : {
         type : Schema.Types.ObjectId
     }
-    }
-)
+})
 
 
 const Category = mongoose.model('Category', categorySchema )

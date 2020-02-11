@@ -105,7 +105,9 @@ userSchema.methods.generateToken = function() {
     user.tokens.push({ token })
     return user.save()
                 .then(user => {
-                    return Promise.resolve(token)
+                    const userToken = _.pick(user, ['_id', 'username', 'email'])
+                    userToken.token = token
+                    return Promise.resolve( userToken )
                 })
                 .catch(err => {
                     return Promise.reject(err)

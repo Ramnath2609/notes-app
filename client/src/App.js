@@ -1,63 +1,67 @@
-import React from 'react';
-import NotesList from '../src/notes/Notes'
-import Login from '../src/login/Login'
-import Register from '../src/login/Register'
-import NewNote from '../src/notes/New'
-import CategoryList from '../src/categories/Categories'
-import NoteEdit from '../src/notes/Edit'
-import NoteShow from '../src/notes/NoteShow'
-import Home from '../src/Home'
-import CategoryNew from '../src/categories/New'
-import CategoryEdit from '../src/categories/Edit'
-import { BrowserRouter, Link, Route, Switch } from 'react-router-dom'
+import React from 'react'
+import { BrowserRouter, Link, Switch, Route } from 'react-router-dom'
+import Login from './login'
+import Home from './Home'
+import Register from './register'
+import ListNote from './components/notes/ListNote'
+import ListCategory from './components/categories/ListCategory'
+import NewCategory from './components/categories/NewCategory'
+import { connect } from 'react-redux'
+import NewNote from './components/notes/NewNote'
+import EditNote from './components/notes/EditNote'
+import  isEmpty  from 'lodash/isEmpty'
+import Bin from './components/notes/Bin'
+import Archives from './components/notes/Archives'
 
-function App() {
-  const handleLogout = () => {
-    localStorage.removeItem("authToken")
-    window.location.href = "/account/login" // we cant access props within this component
-  }
-  return (
-    <div>
-      <BrowserRouter>
-       {
-          localStorage.getItem("authToken") ? (
-            <div>
-              <Link to = '/'> Home  |</Link>
-              <Link to ="/notes">  Noteslist  |</Link>
-              <Link to = '/notes/new'/>
-              <Link to = '/notes/edit/:id' />
-              <Link to = '/categories' >  Categories  |</Link>
-              <Link to = "/users/logout" onClick = { handleLogout }>  Logout</Link>
-            </div>
-            
-          ) : (
-            <div>
-              <Link to = "/">Home |</Link>
-              <Link to ="/users/register">  Register  |</Link>
-              <Link to ="/users/login"> Login |</Link>
-            </div>
-          )
-       }
-         
-          <Switch>
-            <Route exact path = '/' component = { Home } />
-            <Route exact path = "/notes" component = { NotesList } />
-            <Route path = '/notes/new' component = { NewNote }/>
-            <Route path = '/notes/edit/:id' component = { NoteEdit } />
-            <Route path = '/notes/:id' component = { NoteShow } />
-            
-            <Route path = "/users/register" component = { Register } />
-            <Route path = "/users/login" component = { Login } />
-            <Route exact path = '/categories' component = { CategoryList } />
-            <Route path = '/categories/new' component = { CategoryNew } />
-            <Route path = '/categories/edit/:id' component = { CategoryEdit } />
-          </Switch>
-          
-      </BrowserRouter>
-     
-    </div>
-  )
+function App (props) {
+
+    const handleLogout = () => {
+      localStorage.removeItem("authToken")
+      window.location.href = "/login"
+    }
+    console.log('within app')
+
+    return (
+       
+        <BrowserRouter>
+            { localStorage.getItem('authToken') ? (
+              <div>
+                <Link to ="/">Home  |</Link>
+                <Link to = "/notes">  Notes |</Link>
+                <Link to = "/categories"> Categories  |</Link>
+                <Link to = '/archives'> Archived  |</Link>
+                <Link to = "/bin">  Bin   |</Link>
+                <Link to ="/logout" onClick = { handleLogout }> Logout</Link>
+              </div>
+            ) : (
+              <div>
+                <Link to = "/">Home |</Link>
+                <Link to ="/register">Register  |</Link>
+                <Link to = "/login">Login</Link>
+              </div>
+            )}
+            <Switch>
+              <Route exact path = "/" component = { Home } />
+              <Route path = "/register" component = { Register } />
+              <Route path = "/login" component = { Login } />
+              <Route exact path = "/notes" component = { ListNote } />
+              <Route path = "/notes/new" component = { NewNote } /> 
+              <Route exact path = '/categories' component = { ListCategory } />
+              <Route path = "/categories/new" component = { NewCategory } />
+              <Route path = "/notes/edit/:id" component = { EditNote } />
+              <Route path = "/bin" component = { Bin } />
+              <Route path = "/archives" component = { Archives } />
+            </Switch>
+              
+        </BrowserRouter>
+        
+    )
 }
 
+const mapStateToProps = (state) => {
+  return {
+    user : state.user
+  }
+}
 
-export default App;
+export default connect(mapStateToProps)(App)

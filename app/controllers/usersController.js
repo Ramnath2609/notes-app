@@ -1,5 +1,14 @@
 const User = require('../models/user')
+const nodemailer = require('nodemailer')
 
+
+const transporter = nodemailer.createTransport({
+    service : 'gmail',
+    auth : {
+        user : 'ramnath2609@gmail.com',
+        pass : '9894262481'
+    }
+})
 
 module.exports.register = (req, res) => {
     const body = req.body
@@ -19,10 +28,52 @@ module.exports.login = (req, res) => {
         .then(user => {
             return user.generateToken()
         })
-        .then(token => {
-            res.send({ token })
+        .then(userToken => {
+            res.send( userToken )
         })
         .catch(err => {
             res.send({err})
         })
+}
+
+module.exports.show = (req, res) => {
+    User.findOne({ _id : req.user._id })
+        .then(user => {
+            const { _id , username, email } = user
+            res.send({ _id, username, email })
+        })
+        .catch(err => {
+            res.send(err)
+        })
+}
+
+module.exports.delete = (req, res) => {
+    const { user, token } = req
+    //console.log(user, token)
+    User.findOneAndUpdate(user._id, { $pull :{ tokens : { token : token }}})
+        .then(user => {
+            res.send({
+                notice : 'successfully logged out'
+            })
+        })
+        .catch(err => {
+            res.send(err)
+        })
+}
+
+module.exports.reset = (req, res) => {
+    const token = req.header('x-auth')
+    const message = {
+        from : 'ramnath2609@gmail.com',
+        to : req.user.email,
+        subject : 'Password reset',
+        text : `http://localhost:3015/reset-password/${token}`
+    }
+    transporter.sendMail(message, (err, info) => {
+        if(err) {
+            console.log(err)
+        } else {
+            console.log(info)
+        }
+    })
 }

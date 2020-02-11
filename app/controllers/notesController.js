@@ -1,7 +1,12 @@
 const Note = require('../models/note')
 
+
 module.exports.create = (req,  res) => {
     const body = req.body
+    if(req.file) {
+        body.photo = req.file.filename
+    }
+    //console.log(body)
     const note = new Note (body)
     note.user = req.user._id
     note.save()
@@ -19,7 +24,7 @@ module.exports.create = (req,  res) => {
 
 module.exports.destroy = (req, res) => {
     const id = req.params.id
-    Note.findByIdAndDelete(id)
+    Note.findOneAndDelete({ _id : id, user : req.user._id })
         .then(note => {
             if (note) {
             res.json(note)
@@ -45,8 +50,12 @@ module.exports.show = (req, res) => {
 
 module.exports.update = (req, res) => {
     const id = req.params.id
+    //console.log(req.file)
     const body = req.body
-    Note.findByIdAndUpdate(id, body, { new : true, runValidators : true })
+    if(req.file) {
+        body.photo = req.file.filename
+    }
+    Note.findOneAndUpdate({_id : id, user : req.user._id }, body, { new : true, runValidators : true })
         .then(note => {
             if (note) {
                 res.json(note)
