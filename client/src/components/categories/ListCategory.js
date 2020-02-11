@@ -3,9 +3,6 @@ import { startGetCategories } from '../../actions/category'
 import { connect } from 'react-redux'
 
 function ListCategory(props) {
-    if(props.categories.length === 0) {
-        props.dispatch(startGetCategories())
-    }
 
     return (
         <div className = "container">

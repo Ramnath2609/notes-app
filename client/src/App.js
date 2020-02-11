@@ -22,7 +22,6 @@ function App (props) {
     console.log('within app')
 
     return (
-       
         <BrowserRouter>
             { localStorage.getItem('authToken') ? (
               <div>
