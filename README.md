@@ -18,6 +18,14 @@ npm install express
 * cors
 * concurrently
 
+# Features
+* Add image
+* Pin and unpin
+* Archive
+* Bin
+* Set reminder
+* Colour change
+
 
 # Usage
 Create a note by filling the input forms and then select the category within which you need to add this note. If you want to add a new category you can go forward and create a new category and then add this note to that category.
