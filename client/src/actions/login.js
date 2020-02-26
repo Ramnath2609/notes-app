@@ -22,20 +22,23 @@ export const startLoginUser = (formData, props) => {
     return dispatch => {
         axios.post('http://localhost:3015/users/login', formData)
             .then(response => {
-                    //console.log(response.data)
-                    const { user, token } = response.data
-                    localStorage.setItem('authToken', token)
-                    dispatch(loginUser(user))
-                    return Promise.all([ axios.get('http://localhost:3015/notes', {
-                        headers : {
-                            'x-auth' : token
-                        }
-                    }), axios.get('http://localhost:3015/categories', {
-                        headers : {
-                            'x-auth' : token
-                        }
-                    })])
-                
+                    console.log(response.data)
+                    if(response.data.err){
+                        Swal.fire('Oops !', 'Invalid email or password', 'error')
+                    }else{
+                        const { user, token } = response.data
+                        localStorage.setItem('authToken', token)
+                        dispatch(loginUser(user))
+                        return Promise.all([ axios.get('http://localhost:3015/notes', {
+                            headers : {
+                                'x-auth' : token
+                            }
+                        }), axios.get('http://localhost:3015/categories', {
+                            headers : {
+                                'x-auth' : token
+                            }
+                        })])
+                    }    
             })
             .then(responses => {
                 console.log(responses)
@@ -87,6 +90,7 @@ export const startRemoveUser = ()=> {
             }
         })
         .then(response => {
+                localStorage.removeItem('authToken')
                 dispatch(removeUser())
                 Swal.fire('Good job', 'Successfully logged out', 'success')
             }

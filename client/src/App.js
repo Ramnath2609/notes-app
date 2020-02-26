@@ -16,7 +16,6 @@ import { startRemoveUser } from './actions/login'
 function App (props) {
 
     const handleLogout = () => {
-      localStorage.removeItem("authToken")
       props.dispatch(startRemoveUser())
     }
 
