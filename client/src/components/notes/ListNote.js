@@ -27,11 +27,13 @@ function ListNote (props) {
     const unPinned = props.notes.filter(note => !note.pinned)
 
     return (
-        <div className = "container d-block">
+        <div className = "container">
             <h1>Listing notes - { props.notes.length }</h1>
-                {
+                <div className = "row">
+                    {
                     pinned.map(note => {
-                        return  <Card key = { note._id}
+                        return  <div className = "col-md-4">
+                                     <Card key = { note._id}
                                     style={{ width: 300, backgroundColor : `${note.color}` }}
                                     cover={
                                     <img
@@ -51,34 +53,40 @@ function ListNote (props) {
                                     description={ note.description }
                                     />
                                 </Card>
+                                </div>
+
+                           
                     })
                 }
                 {
                     unPinned.map(note => {
-                        return  <Card key = { note._id }
-                        style={{ width: 300, backgroundColor : `${note.color}` }}
-                        cover={
-                        <img
-                            alt="example"
-                            src={`http://localhost:3000/uploads/${note.photo}`}
-                        />
-                        }
-                        actions={[
-                        <Icon type="edit" onClick = {() => { props.history.push(`/notes/edit/${note._id}`)} }/>,
-                        <Icon type="pushpin"  onClick = {() => { handleClick(note) }}/>,
-                        <Icon type="delete" onClick = {() => { handlePushToBin(note) }}/>,
-                        <Icon type="export" onClick = {() => { handleArchiveNote(note)}}/>,
-                        ]}
-                    >
-                        <Meta
-                        title={ note.title }
-                        description={ note.description }
-                        />
-                    </Card>
+                        return  <div className = "col-md-4">
+                                    <Card key = { note._id }
+                                        style={{ width: 300, backgroundColor : `${note.color}` }}
+                                        cover={
+                                        <img
+                                            alt="example"
+                                            src={`http://localhost:3000/uploads/${note.photo}`}
+                                        />
+                                        }
+                                        actions={[
+                                        <Icon type="edit" onClick = {() => { props.history.push(`/notes/edit/${note._id}`)} }/>,
+                                        <Icon type="pushpin"  onClick = {() => { handleClick(note) }}/>,
+                                        <Icon type="delete" onClick = {() => { handlePushToBin(note) }}/>,
+                                        <Icon type="export" onClick = {() => { handleArchiveNote(note)}}/>,
+                                        ]}
+                                    >
+                                        <Meta
+                                        title={ note.title }
+                                        description={ note.description }
+                                        />
+                                    </Card>
+                                    </div>
                     })
+                       
+                       
                 }
-               
-            
+                </div>
             <button className = "btn btn-primary" onClick = {() => { props.history.push('/notes/new')}}>Add a new note</button>
         </div>
     )

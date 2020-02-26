@@ -28,8 +28,8 @@ module.exports.login = (req, res) => {
         .then(user => {
             return user.generateToken()
         })
-        .then(userToken => {
-            res.send( userToken )
+        .then(data => {
+            res.send( data )
         })
         .catch(err => {
             res.send({err})
@@ -50,7 +50,7 @@ module.exports.show = (req, res) => {
 module.exports.delete = (req, res) => {
     const { user, token } = req
     //console.log(user, token)
-    User.findOneAndUpdate(user._id, { $pull :{ tokens : { token : token }}})
+    User.findOneAndUpdate({ _id : user._id }, { $pull :{ tokens : { token : token }}})
         .then(user => {
             res.send({
                 notice : 'successfully logged out'

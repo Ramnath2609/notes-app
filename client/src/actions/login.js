@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { setNotes } from './note'
 import { setCategories } from './category'
+import Swal from 'sweetalert2'
+//import { response } from 'express'
 
 export const loginUser = (user) => {
     return {
@@ -9,16 +11,21 @@ export const loginUser = (user) => {
     }
 }
 
+export const removeUser = () => {
+    return {
+        type : 'REMOVE_USER',
+    }
+}
+
 
 export const startLoginUser = (formData, props) => {
     return dispatch => {
         axios.post('http://localhost:3015/users/login', formData)
             .then(response => {
-                if(response.data._id) {
+                    //console.log(response.data)
                     const { user, token } = response.data
                     localStorage.setItem('authToken', token)
                     dispatch(loginUser(user))
-                   
                     return Promise.all([ axios.get('http://localhost:3015/notes', {
                         headers : {
                             'x-auth' : token
@@ -28,13 +35,15 @@ export const startLoginUser = (formData, props) => {
                             'x-auth' : token
                         }
                     })])
-                } 
+                
             })
             .then(responses => {
+                console.log(responses)
                 const [notes, categories] = responses
                 dispatch(setNotes(notes.data))
                 dispatch(setCategories(categories.data))
                 props.history.push('/')
+                Swal.fire('Good job', 'Successfully logged in', 'success')
             })
             .catch(err => {
                 console.log(err)
@@ -69,5 +78,23 @@ export const startSetUser = () => {
     }
 }
 
+
+export const startRemoveUser = ()=> {
+    return dispatch => {
+        axios.delete('http://localhost:3015/users/logout', {
+            headers : {
+                'x-auth' : localStorage.getItem('authToken')
+            }
+        })
+        .then(response => {
+                dispatch(removeUser())
+                Swal.fire('Good job', 'Successfully logged out', 'success')
+            }
+        )
+        .catch(err => {
+            alert(err)
+        })
+    }
+}
 
 

@@ -10,8 +10,7 @@ class Login extends React.Component {
         this.state = {
             input : '',
             email : '',
-            password : '',
-            forgotPassword : false
+            password : ''
         }
     }
 
@@ -48,9 +47,8 @@ class Login extends React.Component {
                         <input type = "text" className = "form-control" placeholder = "username or email" name = "input" value = { this.state.username } onChange = { this.handleChange } />
                     </div>
                     <div className = "form-group">
-                        <input type = "text" className = "form-control" placeholder = "password" name = "password" value = { this.state.password } onChange = { this.handleChange } />
+                        <input type = "password" className = "form-control" placeholder = "password" name = "password" value = { this.state.password } onChange = { this.handleChange } />
                     </div>
-                    { this.state.forgotPassword && <div className = "alert alert-danger">A password reset link has been sent to your email id.</div>}
                     <button type ="submit" className = "btn btn-primary">Submit</button>
                 </form>
             </div>

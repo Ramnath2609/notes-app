@@ -9,21 +9,20 @@ import NewCategory from './components/categories/NewCategory'
 import { connect } from 'react-redux'
 import NewNote from './components/notes/NewNote'
 import EditNote from './components/notes/EditNote'
-import  isEmpty  from 'lodash/isEmpty'
 import Bin from './components/notes/Bin'
 import Archives from './components/notes/Archives'
+import { startRemoveUser } from './actions/login'
 
 function App (props) {
 
     const handleLogout = () => {
       localStorage.removeItem("authToken")
-      window.location.href = "/login"
+      props.dispatch(startRemoveUser())
     }
-    console.log('within app')
 
     return (
         <BrowserRouter>
-            { localStorage.getItem('authToken') ? (
+            { Object.keys(props.user).length != 0 ? (
               <div>
                 <Link to ="/">Home  |</Link>
                 <Link to = "/notes">  Notes |</Link>

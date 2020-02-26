@@ -61,10 +61,10 @@ class NewNote extends React.Component {
                 <h2>Add a new note</h2>
                 <form onSubmit = { this.handleSubmit }>
                     <div className = "form-group">
-                        <input type="text" className = "form-control" name="title" value={ this.state.title} onChange = { this.handleChange }/>
+                        <input type="text" className = "form-control" placeholder = "title" name="title" value={ this.state.title} onChange = { this.handleChange }/>
                     </div>
                     <div className = "form-group">
-                        <input type="text" className = "form-control" name="description" value={ this.state.description} onChange = { this.handleChange }/>
+                        <input type="text" className = "form-control" placeholder = "description" name="description" value={ this.state.description} onChange = { this.handleChange }/>
                     </div>
                     <div className = "form-group">
                         <input type="file" className = "form-control" name="photo"  onChange = { this.handleChange }/>

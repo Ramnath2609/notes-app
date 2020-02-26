@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export const setNotes = (notes) => {
     return {
@@ -74,6 +75,8 @@ export const startAddNote = (formData) => {
         .then(response => {
             const note = response.data
             dispatch(addNote(note))
+            Swal.fire('Good job', 'Successfully added !', 'success')
+
         })
     }
 }
