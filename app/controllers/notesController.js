@@ -6,7 +6,6 @@ module.exports.create = (req,  res) => {
     if(req.file) {
         body.photo = req.file.filename
     }
-    //console.log(body)
     const note = new Note (body)
     note.user = req.user._id
     note.save()

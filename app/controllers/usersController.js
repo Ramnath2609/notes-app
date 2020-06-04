@@ -61,19 +61,3 @@ module.exports.delete = (req, res) => {
         })
 }
 
-module.exports.reset = (req, res) => {
-    const token = req.header('x-auth')
-    const message = {
-        from : 'ramnath2609@gmail.com',
-        to : req.user.email,
-        subject : 'Password reset',
-        text : `http://localhost:3015/reset-password/${token}`
-    }
-    transporter.sendMail(message, (err, info) => {
-        if(err) {
-            console.log(err)
-        } else {
-            console.log(info)
-        }
-    })
-}

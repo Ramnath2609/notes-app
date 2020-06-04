@@ -11,10 +11,6 @@ const port = 3015
 
 
 
-
-//app.use(express.static('./uploads'))
-
-
 app.use(cors())
 
 

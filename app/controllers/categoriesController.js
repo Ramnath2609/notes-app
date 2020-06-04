@@ -58,14 +58,6 @@ module.exports.update = (req, res) => {
 
 module.exports.destroy = (req,res) => {
     const id = req.params.id
-    const deptNone = "5e3d0e5811237607d409d87c"
-    Note.updateMany({ category : id }, { category : deptNone })
-        .then(notes => {
-            res.send(notes)
-        })
-        .catch(err => {
-            res.semd(err)
-        })
     Category.findOneAndDelete({ _id : id, user : req.user._id })
         .then(category => {
             res.json(category)
