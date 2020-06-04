@@ -2,7 +2,6 @@ import axios from 'axios'
 import { setNotes } from './note'
 import { setCategories } from './category'
 import Swal from 'sweetalert2'
-//import { response } from 'express'
 
 export const loginUser = (user) => {
     return {

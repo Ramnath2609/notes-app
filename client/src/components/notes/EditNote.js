@@ -1,8 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { startEditNote } from '../../actions/note'
-import { TimePicker } from 'antd';
-import moment from 'moment';
 
 class EditNote extends React.Component {
     constructor (props) {
@@ -14,7 +12,6 @@ class EditNote extends React.Component {
             category : props.category ? props.category._id: '' ,
             photo : props.note ? props.note.photo : null,
             color : '',
-            reminder : props.note ? props.note.reminder : ''
         }
     }
 
@@ -34,15 +31,10 @@ class EditNote extends React.Component {
         formData.append('category' , this.state.category)  
         formData.append('photo' , this.state.photo)
         formData.append('color' , this.state.color)
-        formData.append('reminder', this.state.reminder)
         this.props.dispatch(startEditNote({ formData, id }))
         this.props.history.push('/notes')
     }
 
-     onChange = (time, timeString) => {
-        console.log( timeString);
-        this.setState({ reminder : timeString })
-      }
 
     handleChange = (e) => {
         if(e.target.type == 'file') {
@@ -86,7 +78,6 @@ class EditNote extends React.Component {
                         <option value = "#81ecec">Faded poster</option>
                         <option value="#74b9ff">Green darner tail</option>
                     </select></label><br/>
-                    <TimePicker onChange={this.onChange} defaultOpenValue={moment(`${this.state.reminder}`, 'HH:mm:ss')} />
                     <button type="submit" className = "btn btn-primary">Submit</button>
                 </form>
             </div>

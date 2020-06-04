@@ -2,8 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { startGetCategories } from '../../actions/category'
 import { startAddNote } from '../../actions/note'
-import { TimePicker } from 'antd';
-import moment from 'moment';
+
 
 class NewNote extends React.Component {
     constructor (props) {
@@ -14,7 +13,6 @@ class NewNote extends React.Component {
             photo : null,
             category : '',
             color :'',
-            reminder : ''
         }
     }
 
@@ -29,16 +27,10 @@ class NewNote extends React.Component {
         formData.append('description' , this.state.description)
         formData.append('category' , this.state.category)  
         formData.append('photo' , this.state.photo)
-        formData.append('reminder', this.state.reminder)
         console.log(formData)
         this.props.dispatch(startAddNote(formData))
         this.props.history.push('/notes')
     }
-
-    onChange = ( time, timeString) => {
-        console.log( timeString);
-        this.setState({ reminder : timeString })
-      }
 
     handleChange = (e) => {
         if(e.target.type == 'file') {
@@ -85,7 +77,6 @@ class NewNote extends React.Component {
                         <option value = "#81ecec">Faded poster</option>
                         <option value="#74b9ff">Green darner tail</option>
                     </select></label><br/>
-                    <TimePicker onChange={this.onChange} defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} /><br/>
                     <button type="submit" className = "btn btn-primary">Submit</button>
                 </form>
             </div>

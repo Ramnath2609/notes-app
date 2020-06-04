@@ -1,7 +1,5 @@
 const mongoose = require('mongoose')
 
-
-//Schema
 const Schema = mongoose.Schema
 const noteSchema = new Schema({
     title : {
@@ -32,9 +30,6 @@ const noteSchema = new Schema({
     },
     color : {
         type: String
-    },
-    reminder : {
-        type : String
     },
     archived : {
         type : Boolean
